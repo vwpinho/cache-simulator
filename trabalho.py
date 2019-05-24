@@ -26,8 +26,13 @@ print(sys.argv[1].split(':'))
 
 
 '''
-config = sys.argv[1].split(':')
-inFile = sys.argv[2]
+print(len(sys.argv))
+if len(sys.argv) == 2:
+    config = [256, 4, 1]
+    inFile = sys.argv[1]
+else:
+    config = sys.argv[1].split(':')
+    inFile = sys.argv[2]
 acessos = []
 #print(config)
 #print(inFile)
@@ -47,8 +52,7 @@ while b:
 #print(len(acessos))
 #ind = int(str(acessos[1])[10:20], 2)
 #print(ind)
-
-c = Cache(int(config[1]), int(config[1]), int(config[2]))
+c = Cache(int(config[0]), int(config[1]), int(config[2]))
 for i in range(len(acessos)):
     c.write(int(acessos[i]))
 print('MissComp {}'.format(c.missComp))

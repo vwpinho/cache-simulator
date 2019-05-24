@@ -50,16 +50,9 @@ class Cache:
                 self.missCap += 1
             else:
                 self.missConf += 1
-            ri = random.randint(0, self.assoc)
-            b = self.cache[ri].pop[ind]
+            ri = random.randint(0, (self.assoc - 1))
+            b = self.cache[ri].pop(ind)
             b.write(tag)
             self.cache[ri].insert(ind, b)
 
-
-
-
-
-
-
-#        for i in range(len(Cache.cache)):
 
