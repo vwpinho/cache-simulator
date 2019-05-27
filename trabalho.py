@@ -28,7 +28,7 @@ print(sys.argv[1].split(':'))
 '''
 #print(len(sys.argv))
 if len(sys.argv) == 2:
-    config = [256, 4, 1]
+    config = [256, 4, 1, 'r']
     inFile = sys.argv[1]
 else:
     config = sys.argv[1].split(':')

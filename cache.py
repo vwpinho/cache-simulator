@@ -31,12 +31,12 @@ class Cache:
         while len(str(end)) < 32:
             end = '0' + str(end)
         write = False
-        print(type(self.nsets))
-        print(type(self.bsize))
-        print(type(self.wend))
         tamtag = self.wend - int(math.log2(self.nsets)) - int(math.log2(self.bsize))
         tag = str(end)[0:tamtag]
-        ind = int(str(end)[tamtag:(tamtag + int(math.log2(self.nsets)))], 2)
+        if self.nsets == 1:
+            ind = 0;
+        else:
+            ind = int(str(end)[tamtag:(tamtag + int(math.log2(self.nsets)))], 2)
         for i in range(self.assoc):
             b = self.cache[i].pop(ind)
             if b.val == 0:
