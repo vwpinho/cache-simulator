@@ -17,13 +17,14 @@ class Cache:
         self.missConf = 0
         self.acess = 0
         self.hits = 0
-
+        self.pol = pol
         for i in range(assoc):
             self.cache.insert(i, [])
             for j in range(nsets):
                 self.cache[i].insert(j, Bloco())
-                self.fifo.insert(i, [])
-                self.lru.insert(i, [])
+        for i in range(0, self.nsets):
+            self.fifo.insert(i, [])
+            self.lru.insert(i, [])
 
     def write(self, end):
         import math
@@ -34,7 +35,7 @@ class Cache:
         tamtag = self.wend - int(math.log2(self.nsets)) - int(math.log2(self.bsize))
         tag = str(end)[0:tamtag]
         if self.nsets == 1:
-            ind = 0;
+            ind = 0
         else:
             ind = int(str(end)[tamtag:(tamtag + int(math.log2(self.nsets)))], 2)
         for i in range(self.assoc):
@@ -43,16 +44,16 @@ class Cache:
                 self.missComp += 1
                 b.write(tag)
                 self.cache[i].insert(ind, b)
-                self.fifo.append(i)
-                self.lru.append(i)
+                self.fifo[ind].append(i)
+                self.lru[ind].append(i)
                 write = True
                 break
             else:
                 if b.tag == tag:
                     self.hits += 1
                     self.cache[i].insert(ind, b)
-                    self.lru.remove(i)
-                    self.lru.append(i)
+                    self.lru[ind].remove(i)
+                    self.lru[ind].append(i)
                     write = True
                     break
                 else:
@@ -63,19 +64,19 @@ class Cache:
             else:
                 self.missConf += 1
             if self.pol == 'l':
-                aux = self.lru[0]
-                b = self.cache[self.lru[0]].pop(ind)
+                aux = self.lru[ind][0]
+                b = self.cache[self.lru[ind][0]].pop(ind)
                 b.write(tag)
-                self.cache[self.lru[0]].insert(ind, b)
-                self.lru.remove(self.lru[0])
-                self.lru.append(aux)
+                self.cache[self.lru[ind][0]].insert(ind, b)
+                self.lru[ind].remove(self.lru[ind][0])
+                self.lru[ind].append(aux)
             if self.pol == 'f':
-                aux = self.fifo[0]
-                b = self.cache[self.fifo[0]].pop(ind)
+                aux = self.fifo[ind][0]
+                b = self.cache[self.fifo[ind][0]].pop(ind)
                 b.write(tag)
-                self.cache[self.fifo[0]].insert(ind, b)
-                self.fifo.remove(self.fifo[0])
-                self.fifo.append(aux)
+                self.cache[self.fifo[ind][0]].insert(ind, b)
+                self.fifo[ind].remove(self.fifo[ind][0])
+                self.fifo[ind].append(aux)
             if self.pol == 'r':
                 ri = random.randint(0, (self.assoc - 1))
                 b = self.cache[ri].pop(ind)
