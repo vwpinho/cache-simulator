@@ -39,7 +39,7 @@ acessos = []
 # arq = open('teste.dat', 'wb')
 #  *************  FUNCIONA POREM GAMBIARRA  ***********
 arq = open(inFile, 'rb')
-b = arq.read(4)
+'''b = arq.read(4)
 #s = str(bin(int(struct.unpack('I', b)[0] / 16777216)))[2:]
 #print(s)
 
@@ -51,10 +51,15 @@ while b:
 #print(type(acessos[1]))
 #print(len(acessos))
 #ind = int(str(acessos[1])[10:20], 2)
-#print(ind)
+#print(ind)'''
+b = arq.readlines()
+acessos = str(b[0]).split('0b')[1:]
 c = Cache(int(config[0]), int(config[1]), int(config[2]), config[3])
 for i in range(len(acessos)):
-    c.write(int(acessos[i]))
+    if i == len(acessos)-1:
+        c.write(acessos[i][:len(acessos[i])-1])
+    else:
+        c.write(acessos[i])
 print('MissComp {}'.format(c.missComp))
 print('MissConf {}'.format(c.missConf))
 print('MissCap {}'.format(c.missCap))
