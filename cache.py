@@ -84,8 +84,21 @@ class Cache:
                 self.cache[ri].insert(ind, b)
 
     def show_results(self):
-        print('MissComp {}'.format(self.missComp))
-        print('MissConf {}'.format(self.missConf))
-        print('MissCap {}'.format(self.missCap))
-        print('Hits {}'.format(self.hits))
+        tot_miss = self.missComp + self.missCap + self.missConf
+        tot_acess = self.missComp + self.missCap + self.missConf + self.hits
+        print('{} simulation statistics {}'.format('*'*20, '*'*20))
+        print('Misses Compulsorios:\t', end='')
+        print('{}'.format(self.missComp).rjust(10))
+        print('Misses de Conflito:\t', end='')
+        print('{}'.format(self.missConf).rjust(10))
+        print('Misses de Capacidade:\t', end='')
+        print('{}'.format(self.missCap).rjust(10))
+        print('Total de misses:\t', end='')
+        print('{}'.format(tot_miss).rjust(10))
+        print('Total de acessos:\t', end='')
+        print('{}'.format(tot_acess).rjust(10))
+        print('Hits:\t\t\t', end='')
+        print('{}'.format(self.hits).rjust(10))
+        print('Miss rate: \t\t', end='')
+        print('{}'.format(tot_miss/tot_acess).rjust(10))
 
