@@ -83,3 +83,9 @@ class Cache:
                 b.write(tag)
                 self.cache[ri].insert(ind, b)
 
+    def show_results(self):
+        print('MissComp {}'.format(self.missComp))
+        print('MissConf {}'.format(self.missConf))
+        print('MissCap {}'.format(self.missCap))
+        print('Hits {}'.format(self.hits))
+

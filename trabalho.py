@@ -10,6 +10,7 @@ Addresses with 32 bits
 # imports
 from cache import Cache
 import sys
+import struct
 
 # read arguments
 if len(sys.argv) == 2:
@@ -21,8 +22,12 @@ else:
 
 # read the binary file
 arq = open(inFile, 'rb')
-b = arq.readlines()
-acessos = str(b[0]).split('0b')[1:]
+b = arq.read(4)
+aux = ''
+while b:
+    aux = aux + bin(struct.unpack('I', b)[0])
+    b = arq.read(4)
+acessos = aux.split('0b')[1:]
 
 # cache init with the params
 c = Cache(int(config[0]), int(config[1]), int(config[2]), config[3])
@@ -35,10 +40,7 @@ for i in range(len(acessos)):
         c.write(acessos[i])
 
 # simulation results
-print('MissComp {}'.format(c.missComp))
-print('MissConf {}'.format(c.missConf))
-print('MissCap {}'.format(c.missCap))
-print('Hits {}'.format(c.hits))
+c.show_results()
 
 # closing arq
 arq.close()
